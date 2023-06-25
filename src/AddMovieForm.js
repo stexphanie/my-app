@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import Movies from './Movies';
+import React, { useState, useRef } from "react";
+import Movie from "./Movie";
 
 export default function AddMovieForm() {
   const [movies, setMovies] = useState([]);
@@ -9,21 +9,20 @@ export default function AddMovieForm() {
   function addMovie(event) {
     event.preventDefault();
     if (!title.current.value) {
-      alert('Ange en titel för att spara filmen');
-
-    }
-    else if (grade.current.value <= 0) {
-      alert('Ange ett betyg för att spara filmen');
-
-    }
-    else {
+      alert("Ange en titel för att spara filmen");
+    } else if (grade.current.value <= 0) {
+      alert("Ange ett betyg för att spara filmen");
+    } else {
       const newId = movies.length > 0 ? movies[movies.length - 1].id + 1 : 1;
 
-      setMovies([...movies, {
-        id: newId,
-        title: title.current.value,
-        grade: grade.current.value
-      }]);
+      setMovies([
+        ...movies,
+        {
+          id: newId,
+          title: title.current.value,
+          grade: grade.current.value,
+        },
+      ]);
 
       title.current.value = "";
       grade.current.value = "0";
@@ -74,14 +73,17 @@ export default function AddMovieForm() {
       <h2>Filmer</h2>
 
       <ul className="list-group">
-        {movies.map(movie => <Movies key={movie.id} item={movie} deleteItem={deleteItem} />)}
+        {movies.map((movie) => (
+          <Movie key={movie.id} item={movie} deleteItem={deleteItem} />
+        ))}
       </ul>
       <button class="btn btn-primary" onClick={orderTitle}>
         Alfabetisk ordning
       </button>
+
       <button class="btn btn-primary" onClick={orderGrade}>
         Betygsordning
       </button>
     </div>
-  )
+  );
 }
